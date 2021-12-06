@@ -94,8 +94,9 @@ public class CreateNewContactPage extends WebDriverUtility{
 	 * @param contactName
 	 * @param mobileNumber
 	 * @param orgName
+	 * @throws InterruptedException 
 	 */
-	public void createContactWithDate(String date, String contactName, String mobileNumber, String orgName) {
+	public void createContactWithDate(String date, String contactName, String mobileNumber, String orgName) throws InterruptedException {
 		lastNameTextField.sendKeys(contactName);
 		mobileNumberTextField.sendKeys(mobileNumber);
 		organizationLookUpIcon.click();

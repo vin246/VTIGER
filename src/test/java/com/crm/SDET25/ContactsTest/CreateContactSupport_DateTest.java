@@ -1,10 +1,10 @@
 package com.crm.SDET25.ContactsTest;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import com.crm.comcast.GenericUtils.BaseClass;
 import com.crm.comcast.GenericUtils.ExcelUtility;
+import com.crm.comcast.ObjectRepository.ContactInformationPage;
 import com.crm.comcast.ObjectRepository.ContactsPage;
 import com.crm.comcast.ObjectRepository.CreateNewContactPage;
 import com.crm.comcast.ObjectRepository.CreateNewOrganizationPage;
@@ -57,21 +57,22 @@ public class CreateContactSupport_DateTest extends BaseClass{
 		CreateNewContactPage cncp = new CreateNewContactPage(driver);
 		String actualDate = jLib.getSystemDateWithFormat();
 		cncp.createContactWithDate(actualDate, contactName, mobileNumber, orgName);
-
+		ContactInformationPage cip = new ContactInformationPage(driver);
+		
 		//Verify
-		if(contactName.equals(driver.findElement(By.id("dtlview_Last Name")).getText())) {
+		if(contactName.equals(cip.getContactNameInfo().getText())) {
 			System.out.println("Contact Name is Verified");
 		}else {
 			System.out.println("Contact Name is not Verified");
 		}
 
-		if(mobileNumber.equals(driver.findElement(By.id("dtlview_Mobile")).getText())) {
+		if(mobileNumber.equals(cip.getMobileNumberInfo().getText())) {
 			System.out.println("Mobile Number is Verified");
 		}else {
 			System.out.println("Mobile Number is not Verified");	
 		}
 
-		if(actualDate.contains(driver.findElement(By.id("dtlview_Support End Date")).getText())) {
+		if(actualDate.contains(cip.getSupportEndDate().getText())) {
 			System.out.println("Entered date is verified");
 		}else {
 			System.out.println("Entered date is not Verified");

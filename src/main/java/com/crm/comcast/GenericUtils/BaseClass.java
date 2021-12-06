@@ -11,35 +11,39 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import com.crm.comcast.ObjectRepository.HomePage;
 import com.crm.comcast.ObjectRepository.LoginPage;
 
 public class BaseClass {
-	public WebDriver driver;
+	public static WebDriver sdriver;
+	public  WebDriver driver;
 	public JavaUtility jLib = new JavaUtility();
 	public FileUtility fLib = new FileUtility();
-	
+
 	public WebDriverUtility wLib = new WebDriverUtility();
-	
+
 	//Read data from Property File
-	String BROWSER = fLib.readDataFromPropertyFile("browser");
+	//String BROWSER = fLib.readDataFromPropertyFile("browser");
 	String URL = fLib.readDataFromPropertyFile("url");
 	String USERNAME = fLib.readDataFromPropertyFile("username");
 	String PASSWORD = fLib.readDataFromPropertyFile("password");
-	
-	@BeforeSuite
+
+	@BeforeSuite(groups= {"smoke", "regression"})
 	public void beforeSuiteConfig() {
 		System.out.println("Before Suite Config :>>> Establishing DataBase Connection");
 		System.out.println();
 	}
-	@BeforeTest
+	@BeforeTest(groups= {"smoke", "regression"})
 	public void beforeTestConfig() {
 		System.out.println("Before Test Config :>>> Related to Test Tag");
 	}
 
-	@BeforeClass
-	public void launchingTheBrowser() {
+	@Parameters("BROWSER")
+	@BeforeClass(groups= {"smoke", "regression"})
+	public void launchingTheBrowser(@Optional("chrome")  String BROWSER) {
 		if(BROWSER.equalsIgnoreCase("chrome")) {
 			driver = new ChromeDriver();
 		}else if (BROWSER.equalsIgnoreCase("firefox")) {
@@ -47,33 +51,34 @@ public class BaseClass {
 		}else {
 			System.out.println("Invalid Browser Argument");
 		}
+		sdriver = driver;
 		driver.manage().window().maximize();	
 		wLib.waitForPageToLoad(driver);	
 	}
-	
-	@BeforeMethod
+
+	@BeforeMethod(groups= {"smoke", "regression"})
 	public void logintoApplication() {
 		LoginPage lp =  new LoginPage(driver);
 		lp.loginToApplication(URL, USERNAME, PASSWORD);
 	}
-	
-	@AfterMethod
+
+	@AfterMethod(groups= {"smoke", "regression"})
 	public void logoutFromTheApplication() {
 		HomePage hp = new HomePage(driver);
 		hp.signOut();
 	}
-	
-	@AfterClass
+
+	@AfterClass(groups= {"smoke", "regression"})
 	public void closingTheBroswer() {
 		driver.quit();	
 	}
-	
-	@AfterTest
+
+	@AfterTest(groups= {"smoke", "regression"})
 	public void afterTestConfig() {
 		System.out.println("After Test Config :>>> Related to Test Tag");
 	}
-	
-	@AfterSuite
+
+	@AfterSuite(groups= {"smoke", "regression"})
 	public void afterSuiteConfig() {
 		System.out.println("After Suite Config :>>> Closing DataBase Connection");
 	}

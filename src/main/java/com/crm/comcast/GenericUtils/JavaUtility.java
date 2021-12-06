@@ -35,7 +35,7 @@ public class JavaUtility {
 	 */
 	public String getSystemDateWithFormat() {
 		Date dateObj = new Date();
-		int day = dateObj.getDay();
+		int day = dateObj.getDate();
 		int month = dateObj.getMonth()+1;
 		String year = dateObj.toString().split(" ")[5];
 		String yyyymmdd = year+"-"+month+"-"+day;
