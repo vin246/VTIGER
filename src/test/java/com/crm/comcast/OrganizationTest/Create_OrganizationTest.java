@@ -20,10 +20,10 @@ import com.crm.comcast.ObjectRepository.OrganizationPage;
  */
 public class Create_OrganizationTest extends BaseClass{
 	ExcelUtility eLib = new ExcelUtility();
-	HomePage hp = new HomePage(sdriver);
-	OrganizationPage op = new OrganizationPage(driver);
-	CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
-	OrganizationInformationPage oip = new OrganizationInformationPage(driver);
+	//		HomePage hp = new HomePage(sdriver);
+	//		OrganizationPage op = new OrganizationPage(driver);
+	//		CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
+	//		OrganizationInformationPage oip = new OrganizationInformationPage(driver);
 	SoftAssert sa = new SoftAssert();
 	
 	@Test(groups= {"smoke"})
@@ -35,8 +35,11 @@ public class Create_OrganizationTest extends BaseClass{
 		String orgName = eLib.readStringDataFromExcel("Sheet2", 2, 0)+randomNum;
 
 		//Step:1 Create Organization
+		HomePage hp = new HomePage(driver);
 		hp.getOrganizationsLink().click();
+		OrganizationPage op = new OrganizationPage(driver);
 		op.getCreateOrganizationImg().click();
+		CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
 		cnop.createOrganization(orgName);
 
 		//Step:2 Verify whether the organization is created
@@ -56,11 +59,15 @@ public class Create_OrganizationTest extends BaseClass{
 		String typeDropdown = eLib.readStringDataFromExcel("Sheet2", 7, 3);
 
 		//Step:1 Create Organization using Industry and Type Dropdown
+		HomePage hp = new HomePage(driver);
 		hp.getOrganizationsLink().click();
+		OrganizationPage op = new OrganizationPage(driver);
 		op.getCreateOrganizationImg().click();
+		CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
 		cnop.createOrganization(orgName, industryDropdown, typeDropdown);
-		
+
 		//Step:2 Verify
+		OrganizationInformationPage oip = new OrganizationInformationPage(driver);
 		Assert.assertEquals(orgName, oip.getOrganizationNameInfo().getText(), "Organization is not Created" + "==>Fail");
 		sa.assertEquals(industryDropdown, oip.getIndustryNameInfo().getText(), "Industry dropdown is not verified" + "==>Fail");
 		sa.assertEquals(typeDropdown, oip.getTypeNameInfo().getText(), "Type dropdown is verified" + "==>Fail");

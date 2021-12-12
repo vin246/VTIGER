@@ -21,18 +21,22 @@ public class LoginPage {
 		this.driver= driver;
 		PageFactory.initElements(driver, this); //this is used to represent current class
 	}
+
 	public WebElement getUsernameTextField() {
 		return usernameTextField;
 	}
+
 
 	public WebElement getPasswordTextField() {
 		return passwordTextField;
 	}
 
+
 	public WebElement getLoginButton() {
 		return loginButton;
 	}
-	
+
+
 	//Business Logic
 	/**
 	 * function to Login to Application sing default credentials

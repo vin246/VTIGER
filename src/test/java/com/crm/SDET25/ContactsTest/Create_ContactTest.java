@@ -2,7 +2,6 @@ package com.crm.SDET25.ContactsTest;
 
 import java.io.IOException;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -29,9 +28,9 @@ public class Create_ContactTest extends BaseClass{
 		int randomNum =  jLib.getRandomNumber();
 
 		//reading data from Excel
-		ExcelUtility exc = new ExcelUtility();
-		String contactName = exc.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
-		String mobileNumber = exc.readStringDataFromExcel("Sheet2", 1, 5);
+		ExcelUtility eLib = new ExcelUtility();
+		String contactName = eLib.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
+		String mobileNumber = eLib.readStringDataFromExcel("Sheet2", 1, 5);
 
 		// Step:1 Create contact
 		HomePage hp = new HomePage(driver);
@@ -48,87 +47,87 @@ public class Create_ContactTest extends BaseClass{
 		sa.assertEquals(mobileNumber, cip.getMobileNumberInfo().getText(), "Mobile Number is not Verified ==>Fail");
 	}
 
-		@Test(groups="regression")
-		public void createContactUsingOrganization() throws IOException, InterruptedException {
-			//Random data
-			int randomNum =  jLib.getRandomNumber();
+	@Test(groups="regression")
+	public void createContactUsingOrganization() throws IOException, InterruptedException {
+		//Random data
+		int randomNum =  jLib.getRandomNumber();
 
-			//Reading data from Excel File
-			ExcelUtility eLib = new ExcelUtility();
-			String orgName = eLib.readStringDataFromExcel("Sheet2", 2, 0)+randomNum;
-			String contactName = eLib.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
-			String mobileNumber = eLib.readStringDataFromExcel("Sheet2", 1, 5);
+		//Reading data from Excel File
+		ExcelUtility eLib = new ExcelUtility();
+		String orgName = eLib.readStringDataFromExcel("Sheet2", 2, 0)+randomNum;
+		String contactName = eLib.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
+		String mobileNumber = eLib.readStringDataFromExcel("Sheet2", 1, 5);
 
-			//Step:1 Create Organization
-			HomePage hp = new HomePage(driver);
-			hp.getOrganizationsLink().click();
+		//Step:1 Create Organization
+		HomePage hp = new HomePage(driver);
+		hp.getOrganizationsLink().click();
 
-			OrganizationPage op = new OrganizationPage(driver);
-			op.getCreateOrganizationImg().click();
+		OrganizationPage op = new OrganizationPage(driver);
+		op.getCreateOrganizationImg().click();
 
-			CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
-			cnop.createOrganization(orgName);
+		CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
+		cnop.createOrganization(orgName);
 
-			//Step:2 Verify whether the organization is created ?
-			OrganizationInformationPage oip = new OrganizationInformationPage(driver);
-			String actualOrganizationName = oip.getOrganizationNameInfo().getText();
-			Assert.assertEquals(orgName, actualOrganizationName, "Organization is not Created ==> Fail");
+		//Step:2 Verify whether the organization is created ?
+		OrganizationInformationPage oip = new OrganizationInformationPage(driver);
+		String actualOrganizationName = oip.getOrganizationNameInfo().getText();
+		Assert.assertEquals(orgName, actualOrganizationName, "Organization is not Created ==> Fail");
 
-			//Step:3 Create contact using Organization
-			hp.getContactsLink().click();
-			ContactsPage cp = new ContactsPage(driver);
-			cp.getCreateNewContactImg().click();
+		//Step:3 Create contact using Organization
+		hp.getContactsLink().click();
+		ContactsPage cp = new ContactsPage(driver);
+		cp.getCreateNewContactImg().click();
 
-			CreateNewContactPage cncp = new CreateNewContactPage(driver);
-			cncp.createContact(contactName, mobileNumber, orgName);
+		CreateNewContactPage cncp = new CreateNewContactPage(driver);
+		cncp.createContact(contactName, mobileNumber, orgName);
 
-			//Step:4 Verify
-			ContactInformationPage cip = new ContactInformationPage(driver);
-			Assert.assertEquals(contactName, cip.getContactNameInfo().getText(), "Contact Name is not Verified ==>Fail");
-			sa.assertEquals(mobileNumber, cip.getMobileNumberInfo().getText(), "Mobile Number is not Verified ==>Fail");
-		}
-		
-			@Test(groups= "regression")
-			public void createContactSupportDate() throws Throwable {
+		//Step:4 Verify
+		ContactInformationPage cip = new ContactInformationPage(driver);
+		Assert.assertEquals(contactName, cip.getContactNameInfo().getText(), "Contact Name is not Verified ==>Fail");
+		sa.assertEquals(mobileNumber, cip.getMobileNumberInfo().getText(), "Mobile Number is not Verified ==>Fail");
+	}
 
-				//Random data
-				int randomNum =  jLib.getRandomNumber();
+	@Test(groups= "regression")
+	public void createContactSupportDate() throws Throwable {
 
-				//reading data from Excel
-				ExcelUtility exc = new ExcelUtility();
-				String orgName = exc.readStringDataFromExcel("Sheet2", 1, 0)+randomNum;
-				String contactName = exc.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
-				String mobileNumber = exc.readStringDataFromExcel("Sheet2", 1, 5);
+		//Random data
+		int randomNum =  jLib.getRandomNumber();
 
-				//Step:1 Create Organization
-				HomePage hp = new HomePage(driver);
-				hp.getOrganizationsLink().click();
+		//reading data from Excel
+		ExcelUtility eLib = new ExcelUtility();
+		String orgName = eLib.readStringDataFromExcel("Sheet2", 1, 0)+randomNum;
+		String contactName = eLib.readStringDataFromExcel("Sheet2", 1, 1)+randomNum;
+		String mobileNumber = eLib.readStringDataFromExcel("Sheet2", 1, 5);
 
-				OrganizationPage op = new OrganizationPage(driver);
-				op.getCreateOrganizationImg().click();
+		//Step:1 Create Organization
+		HomePage hp = new HomePage(driver);
+		hp.getOrganizationsLink().click();
 
-				CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
-				cnop.createOrganization(orgName);
+		OrganizationPage op = new OrganizationPage(driver);
+		op.getCreateOrganizationImg().click();
 
-				//Step:2 Verify whether the organization is created ?
-				OrganizationInformationPage oip = new OrganizationInformationPage(driver);
-				String actualOrganizationName = oip.getOrganizationNameInfo().getText();
-				Assert.assertEquals(orgName, actualOrganizationName, "Organization is not Created ==> Fail");
+		CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
+		cnop.createOrganization(orgName);
 
-				//Step:3 Create contact using Organization
-				hp.getContactsLink().click();
-				ContactsPage cp = new ContactsPage(driver);
-				cp.getCreateNewContactImg().click();
+		//Step:2 Verify whether the organization is created ?
+		OrganizationInformationPage oip = new OrganizationInformationPage(driver);
+		String actualOrganizationName = oip.getOrganizationNameInfo().getText();
+		Assert.assertEquals(orgName, actualOrganizationName, "Organization is not Created ==> Fail");
 
-				CreateNewContactPage cncp = new CreateNewContactPage(driver);
-				String actualDate = jLib.getSystemDateWithFormat();
-				cncp.createContactWithDate(actualDate, contactName, mobileNumber, orgName);
+		//Step:3 Create contact using Organization
+		hp.getContactsLink().click();
+		ContactsPage cp = new ContactsPage(driver);
+		cp.getCreateNewContactImg().click();
 
-				//Verify
-				ContactInformationPage cip = new ContactInformationPage(driver);
-				Assert.assertEquals(contactName, cip.getContactNameInfo().getText(), "Contact Name is not Verified ==>Fail");
-				sa.assertEquals(mobileNumber, cip.getMobileNumberInfo().getText(), "Mobile Number is not Verified ==>Fail");
-				sa.assertEquals(actualDate, cip.getSupportEndDate().getText(), "Entered date is not Verified ==>Fail");
-	
-			}
-		}
+		CreateNewContactPage cncp = new CreateNewContactPage(driver);
+		String actualDate = jLib.getSystemDateWithFormat();
+		cncp.createContactWithDate(actualDate, contactName, mobileNumber, orgName);
+
+		//Verify
+		ContactInformationPage cip = new ContactInformationPage(driver);
+		Assert.assertEquals(contactName, cip.getContactNameInfo().getText(), "Contact Name is not Verified ==>Fail");
+		sa.assertEquals(mobileNumber, cip.getMobileNumberInfo().getText(), "Mobile Number is not Verified ==>Fail");
+		sa.assertEquals(actualDate, cip.getSupportEndDate().getText(), "Entered date is not Verified ==>Fail");
+
+	}
+}
